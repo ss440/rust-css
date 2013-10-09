@@ -100,8 +100,8 @@ pub trait SelectHandler<N> {
     fn with_node_id<R>(&self, node: &N, f: &fn(Option<&str>) -> R) -> R;
     fn named_parent_node(&self, node: &N, name: &str) -> Option<N>;
     fn parent_node(&self, node: &N) -> Option<N>;
-    fn node_has_class(&self, node: &N, &str) -> bool;
-    fn node_has_id(&self, node: &N, &str) -> bool;
+    fn node_has_class(&self, node: &N, LwcString) -> bool;
+    fn node_has_id(&self, node: &N, LwcString) -> bool;
     fn named_ancestor_node(&self, node: &N, name: &str) -> Option<N>;
     fn node_is_root(&self, node: &N) -> bool;
     fn node_is_link(&self, node: &N) -> bool;
@@ -156,11 +156,11 @@ impl<N, H: SelectHandler<N>> n::s::CssSelectHandler<N> for SelectHandlerWrapper<
     }
 
     fn node_has_class(&self, node: &N, name: LwcString) -> bool {
-        self.inner_ref().node_has_class(node, name.to_str_slice())
+        self.inner_ref().node_has_class(node, name/*.to_str_slice()*/)
     }
 
     fn node_has_id(&self, node: &N, name: LwcString) -> bool {
-        self.inner_ref().node_has_id(node, name.to_str_slice())
+        self.inner_ref().node_has_id(node, name/*.to_str_slice()*/)
     }
 
     fn named_ancestor_node(&self, node: &N, qname: &n::t::CssQName) -> Option<N> {
